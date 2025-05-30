@@ -13,15 +13,19 @@ wss.on('connection', function connection(ws) {
     const message = JSON.parse(data);
     if(message.type ==="iamsender"){
       senderSocket = ws
+      console.log('sender set');
     }
     else if(message.type ==="iamreciever"){
       receiverSocket = ws
+      console.log('receiver set');
     }
     else if(message.type==="createoffer"){
-      receiverSocket?.send(JSON.stringify({type:'createoffer',sdp:'message.sdp'}))
+      receiverSocket?.send(JSON.stringify({type:'createoffer',sdp:message.sdp}))
+      console.log("offer sent");
     }
     else if(message.type==="createanswer"){
-      senderSocket?.send(JSON.stringify({type:'createanswer',sdp:'message.sdp'}))
+      senderSocket?.send(JSON.stringify({type:'createanswer',sdp:message.sdp}))
+      console.log("anser sent")
     }
     else if(message.type==="icecandidate"){
         if(ws===senderSocket){
